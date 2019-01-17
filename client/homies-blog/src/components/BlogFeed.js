@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BlogPost } from './';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 
