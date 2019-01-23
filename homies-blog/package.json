@@ -8,6 +8,7 @@
     "informed": "^1.10.12",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.11",
+    "materialize-css": "^1.0.0-rc.2",
     "passport-local": "^1.0.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
