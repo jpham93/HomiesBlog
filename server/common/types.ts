@@ -1,6 +1,6 @@
 import { Request } from "express";
 
-export interface IUserRequest extends Request {
+export interface UserInterface {
     firstName: string;
     lastName: string;
     birthday: Date;
