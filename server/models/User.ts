@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity } from "typeorm";
-import { Post } from './Post';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity, JoinColumn } from "typeorm";
+import { Comment, Post } from './'
 
 @Entity()
 export class User {
@@ -26,5 +26,10 @@ export class User {
     password: string;
 
     @OneToMany(type => Post, post => post.user)
+    @JoinColumn()
     posts: Post[];
+
+    @OneToMany(type => Comment, comment => comment.user)
+    @JoinColumn()
+    comments: Comment[];
 }

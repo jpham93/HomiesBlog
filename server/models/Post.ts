@@ -1,6 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm';
-import { User } from './User';
-import { Comment } from './Comment';
+import { User, Comment } from './'
 
 @Entity()
 export class Post {

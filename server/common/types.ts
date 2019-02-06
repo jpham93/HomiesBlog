@@ -1,6 +1,7 @@
 import { Request } from "express";
 
-export interface UserInterface {
+export interface UserRequestInterface extends Request {
+    id: string;
     firstName: string;
     lastName: string;
     birthday: Date;

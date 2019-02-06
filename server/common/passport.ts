@@ -1,5 +1,5 @@
 import * as passportJWT from 'passport-jwt';
-import { getConnection } from 'typeorm';
+import { getConnection, Repository } from 'typeorm';
 import { User } from '../models';
 
 const JWTStrategy = passportJWT.Strategy;
@@ -7,11 +7,12 @@ const { ExtractJwt } = passportJWT;
 const options: any = {};
 
 options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-options.secretOrKey = 'secret';
+options.secretOrKey = 'secretsecret';
 
-let user = getConnection().getRepository(User);
+let user: Repository<User> = getConnection().getRepository(User);
 
-export default (passport) => {
+
+module.exports = (passport) => {
     passport.use(new JWTStrategy(options, async (jwtPayload, done) => {
         try {
             let foundUser = await user.findByIds(jwtPayload.id)

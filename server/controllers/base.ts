@@ -1,4 +1,4 @@
-import { User, Post, Comment } from '../models';
+import { User, Post, Comment } from '../models/';
 import { getConnection, DatabaseType } from 'typeorm';
 
 interface IDatabase {

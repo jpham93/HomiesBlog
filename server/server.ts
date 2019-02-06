@@ -1,3 +1,4 @@
+import * as passport from 'passport';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as path from 'path';
@@ -10,15 +11,16 @@ import "reflect-metadata";
 const app = express();
 const port = process.env.PORT || '3001';
 
+
 app.use(validator());
 app.use(cors());
 app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 createConnection().then(async connection => {
   console.log('connected to postgres');
+  require('./common/passport')(passport);
 
   app.use('/api/users', require('./routes/users').default);
   /*
