@@ -20,9 +20,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 createConnection().then(async connection => {
   console.log('connected to postgres');
+  // TODO: ES6 imports
   require('./common/passport')(passport);
 
   app.use('/api/users', require('./routes/users').default);
+  app.use('/api/posts', require('./routes/posts').default);
   /*
   Error handler
   */

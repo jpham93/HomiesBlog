@@ -28,8 +28,11 @@ router.post('/signup', [
     check('email').isEmail(),
     check('birthday')
         .not().isEmpty(),
-    sanitizeBody('email').normalizeEmail(),
-    sanitizeBody('birthday').toDate()
+    sanitizeBody('firstName').trim(),
+    sanitizeBody('lastName').trim(),
+    sanitizeBody('username').trim(),
+    sanitizeBody('email').normalizeEmail().trim(),
+    sanitizeBody('birthday').trim().toDate()
 
 ], (req: Request, res: Response, next: NextFunction) => {
     const errors: any = validationResult(req);
@@ -70,5 +73,8 @@ router.patch('/', [
     }
     user.changePassword(req, res, next);
 })
+
+//TODO: James
+// Change Birthday
 
 export default router;

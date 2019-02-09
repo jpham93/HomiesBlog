@@ -1,26 +1,30 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm';
-import { User, Comment } from './'
+import { Column, Entity, JoinColumn, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Comment, User } from './'
 
 @Entity()
 export class Post {
-    @PrimaryGeneratedColumn("uuid")
+    @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @OneToMany(type => User, user => user.posts)
+    @ManyToOne(type => User, user => user.posts)
+    @JoinColumn({ name: 'userId' })
     user: User;
 
-    @Column("varchar", { length: 255 })
+    @Column('varchar', { length: 255 })
     title: string;
 
-    @Column("text")
+    @Column('text')
     textContent: string;
 
-    @Column("varchar", { length: 255, nullable: true })
+    @Column('varchar', { length: 255, nullable: true })
     mediaUrl: string;
 
+    // todo: array of users
     @Column({ type: 'simple-array', default: '' })
     likes: string[];
 
-    @OneToMany(type => Comment, comment => comment.post)
+    @OneToMany(type => Comment, comment => comment.post, {
+        cascade: true
+    })
     comments: Comment[];
 }
