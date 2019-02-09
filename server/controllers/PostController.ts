@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { BAD_REQUEST } from 'http-status-codes';
-import { BaseController } from './base';
 import { PostPatchInterface } from '../common/types';
+import { BaseController } from './base';
 
 export class PostController extends BaseController {
 
@@ -18,6 +18,16 @@ export class PostController extends BaseController {
         return res.json(newPost);
     }
 
+    public getAllPostsFromUser = async (req: Request, res: Response, next: NextFunction) => {
+        const userId = req.user[0].id;
+        const posts = await this.db.post.createQueryBuilder('post')
+            .leftJoinAndSelect('post.user', 'user')
+            .where('user.id = :id', { id: userId })
+            .getMany()
+            .catch((err: any) => res.status(BAD_REQUEST).json({ error: 'user does not exist' }));
+        res.json(posts);
+    }
+
     public getPost = async (req: Request, res: Response, next: NextFunction) => {
         const post = await this.db.post.findOneOrFail(req.params.id)
             .catch((err: any) => {
@@ -25,8 +35,6 @@ export class PostController extends BaseController {
             });
         return res.json(post);
     }
-    // get all of user's posts
-    // get all of user's friend's posts
 
     public deletePost = async (req: Request, res: Response, next: NextFunction) => {
         const post = await this.db.post.findOneOrFail(req.params.id)
