@@ -24,9 +24,8 @@ createConnection().then(async (connection) => {
   require('./common/passport')(passport);
   app.use('/api/users', require('./routes/users').default);
   app.use('/api/posts', require('./routes/posts').default);
-  /*
-  Error handler
-  */
+
+  // error handler
   app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
     if (err.name === 'UnauthorizedError' || err === 'unauthorized') {
       return res.status(HttpStatus.UNAUTHORIZED).send(`invalid token`);
