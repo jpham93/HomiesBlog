@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import AuthForm from './AuthForm';
-import Grid from '@material-ui/core/Grid';
+import { SignupForm } from '.';
 import styled from 'styled-components'
 
-const StyledGrid = styled.div`
+const StyledDiv = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 1%;
@@ -19,9 +18,9 @@ const StyledGrid = styled.div`
 class HomePage extends Component {
   render() {
     return (
-      <StyledGrid>
-        <AuthForm />
-      </StyledGrid>
+      <StyledDiv>
+        <SignupForm />
+      </StyledDiv>
     );
   }
 }
