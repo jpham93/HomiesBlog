@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
-import { required, validEmail, validDate, minSix, composeValidators } from '../common/validation';
+import { required, validEmail, minSix, composeValidators } from '../common/validation';
 import Grid from '@material-ui/core/Grid';
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));

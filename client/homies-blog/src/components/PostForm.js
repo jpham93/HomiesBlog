@@ -99,7 +99,7 @@ class PostForm extends Component {
                             >
                                 <Button
                                     color='primary'
-                                    variant='raised'
+                                    variant='contained'
                                     size='large'
                                     style={{margin: 'auto'}}
                                     onClick={this.handleSubmit}
