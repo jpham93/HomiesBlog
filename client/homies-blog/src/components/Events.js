@@ -24,11 +24,11 @@ import {
 } from '@material-ui/icons/'
 
 const sampleEvents = [
-    {id: 1, title: 'Event', content: 'Do your homework', date: '1/10/2019', description: 'Blah Blah Blah'},
-    {id: 2, title: 'Event', content: 'Take out the trash', date: '1/10/2019', description: 'Blah Blah Blah'},
-    {id: 3, title: 'Event', content: 'Mow the loan', date: '1/10/2019', description: 'Blah Blah Blah'},
-    {id: 4, title: 'Event', content: 'Call your mom', date: '1/10/2019', description: 'Blah Blah Blah'},
-    {id: 5, title: 'Event', content: 'Eat vegetables', date: '1/10/2019', description: 'Blah Blah Blah'},
+    { id: 1, title: 'Event', content: 'Do your homework', date: '1/10/2019', description: 'Blah Blah Blah' },
+    { id: 2, title: 'Event', content: 'Take out the trash', date: '1/10/2019', description: 'Blah Blah Blah' },
+    { id: 3, title: 'Event', content: 'Mow the loan', date: '1/10/2019', description: 'Blah Blah Blah' },
+    { id: 4, title: 'Event', content: 'Call your mom', date: '1/10/2019', description: 'Blah Blah Blah' },
+    { id: 5, title: 'Event', content: 'Eat vegetables', date: '1/10/2019', description: 'Blah Blah Blah' },
 ]
 
 const styles = (theme) => ({
@@ -39,12 +39,12 @@ const styles = (theme) => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        
+
     },
     // ExpansionPanelSummary : {
     //     textAlign: 'center',
     // },
-    Badge : {
+    Badge: {
         width: '20%',
     },
     NotificationImportant: {
@@ -53,7 +53,7 @@ const styles = (theme) => ({
 })
 
 class Events extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             open: false,
@@ -81,9 +81,9 @@ class Events extends Component {
         const { classes } = this.props
         // const alertIcon = sampleEvents.length ? <NotificationImportant className={classes.NotificationImportant } color='secondary' /> : null
         const length = sampleEvents.length
-        const events = sampleEvents.length ? 
-            sampleEvents.map( event => {
-                return(
+        const events = sampleEvents.length ?
+            sampleEvents.map(event => {
+                return (
                     <Fragment>
                         <Divider />
                         <ListItem key={event.id} onClick={() => this.handleClick(event)}>
@@ -97,16 +97,16 @@ class Events extends Component {
                     </Fragment>
                 )
             }) :
-                "There are no events right now"
-        
+            "There are no events right now"
+
         const { title, content, date, description } = this.state
 
-        return(
+        return (
             <Fragment>
                 <ExpansionPanel className={classes.ExpansionPanel}>
                     <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-                        <Badge className={classes.Badge} 
-                            color="secondary" 
+                        <Badge className={classes.Badge}
+                            color="secondary"
                             badgeContent={length}
                             variant='dot'
                         >
@@ -127,16 +127,16 @@ class Events extends Component {
                     onClose={this.handleToggle}
                 >
                     <DialogTitle>
-                        { title }
+                        {title}
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                             <Divider />
                             <Typography variant='subheading'>
-                                { content }
+                                {content}
                             </Typography>
                             <Divider /><br />
-                           { description }
+                            {description}
                         </DialogContentText>
                     </DialogContent>
                     <Button

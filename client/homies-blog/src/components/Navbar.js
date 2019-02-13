@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link, NavLink, withRouter } from 'react-router-dom'    // keeps the browser from making a request to server
-                                                                // NavLink is similiar to Link but adds to class active
-                                                                // withRouter wraps higher order component and gives it same props as Route component
+// NavLink is similiar to Link but adds to class active
+// withRouter wraps higher order component and gives it same props as Route component
 import {
     AppBar,
     Toolbar,
@@ -24,14 +24,14 @@ const styles = (theme) => ({
     },
     TextField: {
         width: 250,
-        marginLeft: 20,  
+        marginLeft: 20,
     },
-    SearchIcon : {
-        marginLeft: 30,  
+    SearchIcon: {
+        marginLeft: 30,
     },
     Tab: {
         color: 'white',
-        '&:hover' : {
+        '&:hover': {
             background: '#74B9FF',
         },
         '&:focus': {
@@ -44,12 +44,12 @@ class Navbar extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            index : 0,
+            index: 0,
         }
     }
 
     handleClick = (value) => {
-        this.setState({ 
+        this.setState({
             index: value
         })
     }
@@ -57,7 +57,7 @@ class Navbar extends Component {
     render() {
         const { classes } = this.props
 
-        return(
+        return (
             <div id='navbar-container'>
                 <AppBar position='static'>
                     <Toolbar variant='title' color='inherit'>
@@ -68,50 +68,50 @@ class Navbar extends Component {
                             lg={12}
                         >
 
-                            <Grid 
-                                container 
-                                lg={4} 
-                                alignItems='center'
-                                justify='center'
-                            >
-                                <Grid item lg>
-                                    <Typography  variant='h4'>
-                                        Homies Blog
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-
-                            <Grid 
+                            <Grid
                                 container
                                 lg={4}
                                 alignItems='center'
                                 justify='center'
                             >
                                 <Grid item lg>
-                                <Tabs
-                                    value={this.state.index}   // first item is being underlined (selected) at value 0
-                                    indicatorColor='secondary'
-
-                                >   
-                                    <Link to='/' onClick={ () => this.handleClick(0) }>
-                                        <Tab label='Home' className={classes.Tab} />
-                                    </Link>                                
-                                    <Link to='/post' onClick={ () => this.handleClick(1) }>
-                                        <Tab label='Post' className={classes.Tab} />
-                                    </Link>                                
-                                    <Link to='/feed' onClick={ () => this.handleClick(2)}>
-                                        <Tab label='Feed' className={classes.Tab} />
-                                    </Link>                                    
-                                </Tabs>
+                                    <Typography variant='h4'>
+                                        Homies Blog
+                                    </Typography>
                                 </Grid>
                             </Grid>
-                            <Grid 
-                                lg={4} 
-                                container 
+
+                            <Grid
+                                container
+                                lg={4}
+                                alignItems='center'
+                                justify='center'
+                            >
+                                <Grid item lg>
+                                    <Tabs
+                                        value={this.state.index}   // first item is being underlined (selected) at value 0
+                                        indicatorColor='secondary'
+
+                                    >
+                                        <Link to='/' onClick={() => this.handleClick(0)}>
+                                            <Tab label='Home' className={classes.Tab} />
+                                        </Link>
+                                        <Link to='/post' onClick={() => this.handleClick(1)}>
+                                            <Tab label='Post' className={classes.Tab} />
+                                        </Link>
+                                        <Link to='/feed' onClick={() => this.handleClick(2)}>
+                                            <Tab label='Feed' className={classes.Tab} />
+                                        </Link>
+                                    </Tabs>
+                                </Grid>
+                            </Grid>
+                            <Grid
+                                lg={4}
+                                container
                                 justify='center'
                                 alignItems='center'
                             >
-                                <Grid 
+                                <Grid
                                     container
                                     justify='center'
                                     alignItems='center'
@@ -130,10 +130,9 @@ class Navbar extends Component {
                                     <Button variant='contained' className={classes.Button}>Logout</Button>
                                 </Grid>
                             </Grid>
-                            
+
                         </Grid>
 
-                        
                     </Toolbar>
                 </AppBar>
             </div>
