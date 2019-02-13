@@ -45,14 +45,12 @@ export class UserController extends BaseController {
     */
     public login = async (req: Request, res: Response, next: NextFunction) => {
         const { email, password } = req.body;
-        const user = await this.db.user.findOneOrFail({ email })
-            .catch((err: any) => {
-                res.status(404).json({ error: 'user not found' })
-                next(err);
-            });
+        const user = await this.db.user.findOne({ email })
+        if (!user) {
+            res.status(404).json({ error: 'user not found' })
+        }
         const matching = await bcrypt.compare(password, user.password)
             .catch((err: any) => {
-                res.status(BAD_REQUEST).json({ error: 'passwords do not match' });
                 next(err);
             });
         if (!matching) {

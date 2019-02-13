@@ -3,142 +3,175 @@ import { Link, NavLink, withRouter } from 'react-router-dom'    // keeps the bro
 // NavLink is similiar to Link but adds to class active
 // withRouter wraps higher order component and gives it same props as Route component
 import {
-    AppBar,
-    Toolbar,
-    Typography,
-    Button,
-    TextField,
-    Grid,
-    Tab,
-    Tabs,
-    withStyles
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  TextField,
+  Grid,
+  Tab,
+  Tabs,
+  withStyles
 } from '@material-ui/core'
-
+import { logoutUser } from '../actions/user_actions';
+import { connect } from 'react-redux';
 import SearchIcon from '@material-ui/icons/Search'
 
 const styles = (theme) => ({
-    Button: {
-        position: 'absolute',
-        top: 10,
-        right: 10,
+  Grid: {
+    display: 'flex',
+  },
+  Button: {
+    justifyContent: 'space-between',
+    color: 'white',
+    background: 'blue',
+    top: 10,
+    right: 10,
+  },
+  TextField: {
+    width: 250,
+    marginLeft: 20,
+  },
+  SearchIcon: {
+    marginLeft: 30,
+  },
+  Tab: {
+    color: 'white',
+    '&:hover': {
+      background: '#74B9FF',
     },
-    TextField: {
-        width: 250,
-        marginLeft: 20,
-    },
-    SearchIcon: {
-        marginLeft: 30,
-    },
-    Tab: {
-        color: 'white',
-        '&:hover': {
-            background: '#74B9FF',
-        },
-        '&:focus': {
-            background: 'inherit',
-        }
+    '&:focus': {
+      background: 'inherit',
     }
+  }
 })
 
 class Navbar extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            index: 0,
-        }
+  constructor(props) {
+    super(props)
+    this.state = {
+      index: 0,
     }
+  }
 
-    handleClick = (value) => {
-        this.setState({
-            index: value
-        })
-    }
+  handleClick = (value) => {
+    this.setState({
+      index: value
+    })
+  }
 
-    render() {
-        const { classes } = this.props
+  buttonOnClick = async () => {
+    await this.props.logoutUser(this.props.history);
+  }
 
-        return (
-            <div id='navbar-container'>
-                <AppBar position='static'>
-                    <Toolbar variant='title' color='inherit'>
+  render() {
+    const { classes } = this.props
 
-                        <Grid
-                            container
-                            justify='space-between'
-                            lg={12}
-                        >
+    return (
+      <div id='navbar-container'>
+        <AppBar position='static'>
+          <Toolbar variant='title' color='inherit'>
 
-                            <Grid
-                                container
-                                lg={4}
-                                alignItems='center'
-                                justify='center'
-                            >
-                                <Grid item lg>
-                                    <Typography variant='h4'>
-                                        Homies Blog
+            <Grid
+              container
+              justify='space-between'
+              lg={12}
+            >
+
+              <Grid
+                container
+                lg={4}
+                alignItems='center'
+                justify='center'
+              >
+                <Grid item lg>
+                  <Typography variant='h4'>
+                    Homies Blog
                                     </Typography>
-                                </Grid>
-                            </Grid>
+                </Grid>
+              </Grid>
 
-                            <Grid
-                                container
-                                lg={4}
-                                alignItems='center'
-                                justify='center'
-                            >
-                                <Grid item lg>
-                                    <Tabs
-                                        value={this.state.index}   // first item is being underlined (selected) at value 0
-                                        indicatorColor='secondary'
+              <Grid
+                container
+                lg={4}
+                alignItems='center'
+                justify='center'
+              >
+                <Grid item lg>
+                  <Tabs
+                    value={this.state.index}   // first item is being underlined (selected) at value 0
+                    indicatorColor='secondary'
 
-                                    >
-                                        <Link to='/' onClick={() => this.handleClick(0)}>
-                                            <Tab label='Home' className={classes.Tab} />
-                                        </Link>
-                                        <Link to='/post' onClick={() => this.handleClick(1)}>
-                                            <Tab label='Post' className={classes.Tab} />
-                                        </Link>
-                                        <Link to='/feed' onClick={() => this.handleClick(2)}>
-                                            <Tab label='Feed' className={classes.Tab} />
-                                        </Link>
-                                    </Tabs>
-                                </Grid>
-                            </Grid>
-                            <Grid
-                                lg={4}
-                                container
-                                justify='center'
-                                alignItems='center'
-                            >
-                                <Grid
-                                    container
-                                    justify='center'
-                                    alignItems='center'
-                                    lg={1}
-                                >
-                                    <Grid item sm>
-                                        <SearchIcon className={classes.SearchIcon} />
-                                    </Grid>
-                                </Grid>
+                  >
+                    <Link to='/' onClick={() => this.handleClick(0)}>
+                      <Tab label='Home' className={classes.Tab} />
+                    </Link>
+                    <Link to='/post' onClick={() => this.handleClick(1)}>
+                      <Tab label='Post' className={classes.Tab} />
+                    </Link>
+                    <Link to='/feed' onClick={() => this.handleClick(2)}>
+                      <Tab label='Feed' className={classes.Tab} />
+                    </Link>
+                  </Tabs>
+                </Grid>
+              </Grid>
+              <Grid
+                lg={4}
+                container
+                justify='center'
+                alignItems='center'
+              >
+                <Grid
+                  container
+                  justify='center'
+                  alignItems='center'
+                  lg={1}
+                >
+                  <Grid item sm>
+                    <SearchIcon className={classes.SearchIcon} />
+                  </Grid>
+                </Grid>
 
-                                <Grid item lg>
-                                    <TextField className={classes.TextField}></TextField>
-                                </Grid>
+                <Grid item lg>
+                  <TextField className={classes.TextField}></TextField>
+                </Grid>
 
-                                <Grid item lg>
-                                    <Button variant='contained' className={classes.Button}>Logout</Button>
-                                </Grid>
-                            </Grid>
-
-                        </Grid>
-
-
-                    </Toolbar>
-                </AppBar>
-            </div>
-        )
-    }
+                <Grid item lg>
+                  {this.props.user.authenticated ?
+                    <Button>
+                      variant='contained'
+                      className={classes.Button}
+                      onClick={this.buttonOnClick}
+                      >
+                        Logout
+                    </Button>
+                    :
+                    <Grid container>
+                      <Grid item>
+                        <Link to='/login'>
+                          <Button variant='contained' className={classes.Button}>Login</Button>
+                        </Link>
+                      </Grid>
+                      <Grid item>
+                        <Link to='/signup'>
+                          <Button variant='contained' className={classes.Button}>Signup</Button>
+                        </Link>
+                      </Grid>
+                    </Grid>
+                  }
+                </Grid>
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </AppBar>
+      </div>
+    )
+  }
 }
 
-export default withStyles(styles)(withRouter(Navbar))
+const mapStateToProps = state => ({
+  user: state.user,
+  errors: state.error
+});
+
+export default connect(mapStateToProps, { logoutUser })(withStyles(styles)(withRouter(Navbar)))

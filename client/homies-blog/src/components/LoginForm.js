@@ -43,6 +43,12 @@ class LoginForm extends Component {
   }
 
   render() {
+    if (this.props.user.authenticated) {
+      return (
+        //todo: do something with this.
+        <h1>Login successful</h1>
+      );
+    }
     return (
       <div>
         <h1>Login</h1>

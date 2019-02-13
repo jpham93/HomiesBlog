@@ -9,7 +9,7 @@ export const signup = (user, history) => async dispatch => {
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data
+        payload: err.response.error
       });
     });
   history.push('/login');
@@ -18,6 +18,7 @@ export const signup = (user, history) => async dispatch => {
 export const login = (user) => async dispatch => {
   let response = await axios.post(`${URL}/api/users/login`, user)
     .catch(err => {
+      console.log(err.response);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
