@@ -13,10 +13,16 @@ const onSubmit = async values => {
   window.alert(JSON.stringify(values, 0, 2));
 };
 
-const ErrorMessage = styled.span`
+const LabelError = styled.span`
   color: red;
   font-size: 0.75rem;
+  justify-content: right;  
 `
+
+const LabelContainer = styled.label`
+  display:flex;
+  justify-content: space-between;
+`;
 
 class AuthForm extends Component {
   generateFields(name, validation, type, label, placeholder) {
@@ -25,9 +31,10 @@ class AuthForm extends Component {
         <Field name={name} validate={validation}>
           {({ input, meta }) => (
             <div>
-              <label>{label}</label>
+              <LabelContainer>
+                <label>{label}</label> {meta.error && meta.touched && <LabelError>{meta.error}</LabelError>}
+              </LabelContainer>
               <input {...input} type={type} placeholder={placeholder} />
-              {meta.error && meta.touched && <ErrorMessage>{meta.error}</ErrorMessage>}
             </div>
           )}
         </Field>
@@ -36,30 +43,33 @@ class AuthForm extends Component {
   }
   render() {
     return (
-      <Form
-        onSubmit={onSubmit}
-        render={({ handleSubmit, reset, submitting, pristine, values }) => (
-          <form onSubmit={handleSubmit} autoComplete='off'>
-            <Grid container spacing={16}>
-              {this.generateFields('email', composeValidators(required, validEmail), 'text', 'Email', 'email@example.com')}
-              {this.generateFields('username', required, 'text', 'Username', 'user1234')}
-              {this.generateFields('firstName', composeValidators(required), 'text', 'First Name', 'John')}
-              {this.generateFields('lastName', composeValidators(required), 'text', 'Last Name', 'Doe')}
-              {this.generateFields('birthday', composeValidators(required, validDate), 'date', 'Birthday', '')}
-            </Grid>
-            <Grid container spacing={16}>
-              {this.generateFields('password', composeValidators(required, minSix), 'password', 'Password', '')}
-              {this.generateFields('passwordConfirmation', composeValidators(required, minSix), 'password', 'Confirm Password', '')}
-            </Grid>
-            <div className="buttons">
-              <Button variant="contained" type="submit" color="primary" disabled={submitting}>
-                Submit
+      <div>
+        <h1>Signup</h1>
+        <Form
+          onSubmit={onSubmit}
+          render={({ handleSubmit, reset, submitting, pristine, values }) => (
+            <form onSubmit={handleSubmit} autoComplete='off'>
+              <Grid container spacing={16}>
+                {this.generateFields('email', composeValidators(required, validEmail), 'text', 'Email', 'email@example.com')}
+                {this.generateFields('username', required, 'text', 'Username', 'user1234')}
+                {this.generateFields('firstName', composeValidators(required), 'text', 'First Name', 'John')}
+                {this.generateFields('lastName', composeValidators(required), 'text', 'Last Name', 'Doe')}
+                {this.generateFields('birthday', composeValidators(required, validDate), 'date', 'Birthday', '')}
+              </Grid>
+              <Grid container spacing={16}>
+                {this.generateFields('password', composeValidators(required, minSix), 'password', 'Password', '')}
+                {this.generateFields('passwordConfirmation', composeValidators(required, minSix), 'password', 'Confirm Password', '')}
+              </Grid>
+              <div className="buttons">
+                <Button variant="contained" type="submit" color="primary" disabled={submitting}>
+                  Submit
               </Button>
-            </div>
-            <pre>{JSON.stringify(values, 0, 2)}</pre>
-          </form>
-        )}
-      />
+              </div>
+              <pre>{JSON.stringify(values, 0, 2)}</pre>
+            </form>
+          )}
+        />
+      </div>
     );
   }
 }

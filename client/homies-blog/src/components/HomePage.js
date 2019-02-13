@@ -4,18 +4,22 @@ import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components'
 
 const StyledGrid = styled.div`
-
-  max-width: 500px;
+  display: flex;
+  justify-content: center;
   margin-top: 1%;
   label {
     color: darkblue;
+  }
+  AuthForm {
+    max-width: 50%;
+    display: block;
   }
 `;
 
 class HomePage extends Component {
   render() {
     return (
-      <StyledGrid container>
+      <StyledGrid>
         <AuthForm />
       </StyledGrid>
     );
