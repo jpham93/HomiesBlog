@@ -1,74 +1,154 @@
-import React from 'react'
-import Divider from '@material-ui/core/Divider'
-import List from '@material-ui/core/List'
-import ListItem  from '@material-ui/core/ListItem'
-import ListItemText  from '@material-ui/core/ListItemText'
-import Avatar  from '@material-ui/core/Avatar'
-import ImageIcon  from '@material-ui/icons/Image'
-
+import React, { Component, Fragment } from 'react'
+import {
+    Divider,
+    List,
+    ListItem,
+    ListItemText,
+    Typography,
+    Avatar,
+    ExpansionPanel,
+    ExpansionPanelSummary,
+    ExpansionPanelDetails,
+    withStyles,
+    Button,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    Badge,
+} from '@material-ui/core'
+import {
+    Image,
+    ExpandMore,
+    NotificationImportant
+} from '@material-ui/icons/'
 
 const sampleEvents = [
-    {id: 1, title: 'Event', content: 'Do your homework'},
-    {id: 2, title: 'Event', content: 'Take out the trash'},
-    {id: 3, title: 'Event', content: 'Mow the loan'},
-    {id: 4, title: 'Event', content: 'Call your mom'},
-    {id: 5, title: 'Event', content: 'Eat vegetables'},
+    {id: 1, title: 'Event', content: 'Do your homework', date: '1/10/2019', description: 'Blah Blah Blah'},
+    {id: 2, title: 'Event', content: 'Take out the trash', date: '1/10/2019', description: 'Blah Blah Blah'},
+    {id: 3, title: 'Event', content: 'Mow the loan', date: '1/10/2019', description: 'Blah Blah Blah'},
+    {id: 4, title: 'Event', content: 'Call your mom', date: '1/10/2019', description: 'Blah Blah Blah'},
+    {id: 5, title: 'Event', content: 'Eat vegetables', date: '1/10/2019', description: 'Blah Blah Blah'},
 ]
 
-/*
-const Events = (props) => {
+const styles = (theme) => ({
+    ExpansionPanel: {
+        width: 300,
+        position: 'absolute',
+        right: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        
+    },
+    // ExpansionPanelSummary : {
+    //     textAlign: 'center',
+    // },
+    Badge : {
+        width: '20%',
+    },
+    NotificationImportant: {
+        marginRight: 5,
+    },
+})
 
-    const contents = sampleEvents.length ? 
-        sampleEvents.map( event => {
-            return(
-                <li key={event.id} className='collection-item'>
-                    { event.event }
-                </li>
-            )
-        }) :
-            "There are no events right now"
+class Events extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            open: false,
+        }
+    }
 
-    const headerStyle = sampleEvents.length ? 'indigo-text darken-3 flow-text pulse' : 'indigo-text lighten-2 flow-text'
-    const containerStyle = {width: '300px', position: 'absolute', right: '10px '}
+    handleClick = (data) => {
+        const { title, content, date, description } = data
+        this.setState({
+            title,
+            content,
+            date,
+            description,
+        })
+        this.handleToggle()
+    }
 
-    return(
-        <div style={containerStyle} id='event'>
-            <ul className='collection with-header'>
-                <li className={headerStyle} style={{paddingLeft: '5px'}}>Reminders</li>
-                {events}       
-            </ul>
-        </div>
-    )
-}
-*/
+    handleToggle = () => {
+        this.setState({
+            open: !this.state.open
+        })
+    }
 
-const Events = (props) => {
-
-    const events = sampleEvents.length ? 
-        sampleEvents.map( event => {
-            return(
-                <li key={event.id}>
-                    <ListItem>
-                        <Avatar>
-                            <ImageIcon />
-                        </Avatar>
-                        <ListItemText primary={event.title} secondary={event.content} />
-                    </ListItem>
-                    <li>
+    render() {
+        const { classes } = this.props
+        // const alertIcon = sampleEvents.length ? <NotificationImportant className={classes.NotificationImportant } color='secondary' /> : null
+        const length = sampleEvents.length
+        const events = sampleEvents.length ? 
+            sampleEvents.map( event => {
+                return(
+                    <Fragment>
                         <Divider />
-                    </li>
-                </li>
-            )
-        }) :
-            "There are no events right now"
-            
-    const containerStyle = {width: '300px', position: 'absolute', right: '10px '}
+                        <ListItem key={event.id} onClick={() => this.handleClick(event)}>
+                            <Avatar>
+                                <Image />
+                            </Avatar>
+                            <ListItemText primary={event.title} secondary={event.content} />
+                            <Typography variant='subtitle2'>{event.date}</Typography>
+                        </ListItem>
+                        <Divider />
+                    </Fragment>
+                )
+            }) :
+                "There are no events right now"
+        
+        const { title, content, date, description } = this.state
 
-    return(
-            <List style={ containerStyle }>
-                {events}
-            </List>
-    );
+        return(
+            <Fragment>
+                <ExpansionPanel className={classes.ExpansionPanel}>
+                    <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+                        <Badge className={classes.Badge} 
+                            color="secondary" 
+                            badgeContent={length}
+                            variant='dot'
+                        >
+                            <Typography variant='subtitle1'>
+                                Events
+                            </Typography>
+                        </Badge>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <List >
+                            {events}
+                        </List>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+
+                <Dialog
+                    open={this.state.open}
+                    onClose={this.handleToggle}
+                >
+                    <DialogTitle>
+                        { title }
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            <Divider />
+                            <Typography variant='subheading'>
+                                { content }
+                            </Typography>
+                            <Divider /><br />
+                           { description }
+                        </DialogContentText>
+                    </DialogContent>
+                    <Button
+                        variant='contained'
+                        onClick={this.handleToggle}
+                    >
+                        Close
+                    </Button>
+                </Dialog>
+            </Fragment>
+        );
+    }
 }
 
-export default Events;
+export default withStyles(styles)(Events);

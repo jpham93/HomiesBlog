@@ -1,96 +1,144 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link, NavLink, withRouter } from 'react-router-dom'    // keeps the browser from making a request to server
                                                                 // NavLink is similiar to Link but adds to class active
                                                                 // withRouter wraps higher order component and gives it same props as Route component
-import AppBar from '@material-ui/core/AppBar' 
-import Toolbar from '@material-ui/core/Toolbar' 
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
-import Grid from '@material-ui/core/Grid'
+import {
+    AppBar,
+    Toolbar,
+    Typography,
+    Button,
+    TextField,
+    Grid,
+    Tab,
+    Tabs,
+    withStyles
+} from '@material-ui/core'
 
 import SearchIcon from '@material-ui/icons/Search'
 
-const Navbar = (props) => {
-    return(
-        <div id='navbar-container'>
-            <AppBar position='static'>
-                <Toolbar variant='title' color='inherit'>
+const styles = (theme) => ({
+    Button: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+    },
+    TextField: {
+        width: 250,
+        marginLeft: 20,  
+    },
+    SearchIcon : {
+        marginLeft: 30,  
+    },
+    Tab: {
+        color: 'white',
+        '&:hover' : {
+            background: '#74B9FF',
+        },
+        '&:focus': {
+            background: 'inherit',
+        }
+    }
+})
 
-                    <Grid
-                        justify='space-between'
-                        container
-                    >
+class Navbar extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            index : 0,
+        }
+    }
 
-                        <Grid 
-                            container 
-                            lg={4} 
-                            alignItems='center'
-                            justify='center'
+    handleClick = (value) => {
+        this.setState({ 
+            index: value
+        })
+    }
+
+    render() {
+        const { classes } = this.props
+
+        return(
+            <div id='navbar-container'>
+                <AppBar position='static'>
+                    <Toolbar variant='title' color='inherit'>
+
+                        <Grid
+                            container
+                            justify='space-between'
+                            lg={12}
                         >
-                            <Grid item>
-                                <Typography  variant='h4'>
-                                    Homies Blog
-                                </Typography>
+
+                            <Grid 
+                                container 
+                                lg={4} 
+                                alignItems='center'
+                                justify='center'
+                            >
+                                <Grid item lg>
+                                    <Typography  variant='h4'>
+                                        Homies Blog
+                                    </Typography>
+                                </Grid>
                             </Grid>
-                        </Grid>
 
-                        <Grid 
-                            lg={4} 
-                            container 
-                            justify='center'
-                        >
                             <Grid 
                                 container
+                                lg={4}
+                                alignItems='center'
+                                justify='center'
+                            >
+                                <Grid item lg>
+                                <Tabs
+                                    value={this.state.index}   // first item is being underlined (selected) at value 0
+                                    indicatorColor='secondary'
+
+                                >   
+                                    <Link to='/' onClick={ () => this.handleClick(0) }>
+                                        <Tab label='Home' className={classes.Tab} />
+                                    </Link>                                
+                                    <Link to='/post' onClick={ () => this.handleClick(1) }>
+                                        <Tab label='Post' className={classes.Tab} />
+                                    </Link>                                
+                                    <Link to='/feed' onClick={ () => this.handleClick(2)}>
+                                        <Tab label='Feed' className={classes.Tab} />
+                                    </Link>                                    
+                                </Tabs>
+                                </Grid>
+                            </Grid>
+                            <Grid 
+                                lg={4} 
+                                container 
                                 justify='center'
                                 alignItems='center'
-                                xs={1}
                             >
-                                <Grid item>
-                                    <SearchIcon />
+                                <Grid 
+                                    container
+                                    justify='center'
+                                    alignItems='center'
+                                    lg={1}
+                                >
+                                    <Grid item sm>
+                                        <SearchIcon className={classes.SearchIcon} />
+                                    </Grid>
+                                </Grid>
+
+                                <Grid item lg>
+                                    <TextField className={classes.TextField}></TextField>
+                                </Grid>
+
+                                <Grid item lg>
+                                    <Button variant='contained' className={classes.Button}>Logout</Button>
                                 </Grid>
                             </Grid>
-
-                            <Grid item >
-                                <TextField style={{width:'300px'}} ></TextField>
-                            </Grid>
+                            
                         </Grid>
 
-                        <Grid 
-                            lg={4} 
-                            container  
-                            alignItems='center'
-                            justify='center'
-                        >
-                            <Link to='/'>
-                                <Grid item>
-                                    <Button >Home</Button>
-                                </Grid>
-                            </Link>
-                            
-                            <Link to='/post'>
-                                <Grid item>
-                                    <Button >Post</Button>
-                                </Grid>
-                            </Link>
-                            
-                            <Link to='/feed'>
-                                <Grid item>
-                                    <Button >Feed</Button>
-                                </Grid>
-                            </Link>
                         
-                            <Grid item>
-                                <Button variant='contained'>Logout</Button>
-                            </Grid>
-                        </Grid>
-
-                    </Grid>
-                    
-                </Toolbar>
-            </AppBar>
-        </div>
-    )
+                    </Toolbar>
+                </AppBar>
+            </div>
+        )
+    }
 }
 
-export default withRouter(Navbar)
+export default withStyles(styles)(withRouter(Navbar))
