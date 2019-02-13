@@ -1,13 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import EventForm from './EventForm'
+import { SignupForm } from '.';
+import styled from 'styled-components'
 import {
-  withStyles, 
+  withStyles,
   Typography,
   Grid,
 } from '@material-ui/core'
 
 const styles = theme => ({
-  Typography : {
+  Typography: {
     textAlign: 'center',
     marginTop: 20
   },
@@ -33,8 +35,8 @@ class HomePage extends Component {
         </Grid>
 
       </Fragment>
+    );
 
-    )
   }
 }
 

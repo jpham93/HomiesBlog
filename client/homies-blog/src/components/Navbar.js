@@ -13,12 +13,18 @@ import {
     Tabs,
     withStyles
 } from '@material-ui/core'
-
+import { logoutUser } from '../actions/user_actions';
+import { connect } from 'react-redux';
 import SearchIcon from '@material-ui/icons/Search'
 
 const styles = (theme) => ({
+    Grid: {
+        display: 'flex',
+    },
     Button: {
-        position: 'absolute',
+        justifyContent: 'space-between',
+        color: 'white',
+        background: 'blue',
         top: 10,
         right: 10,
     },
@@ -52,6 +58,10 @@ class Navbar extends Component {
         this.setState({
             index: value
         })
+    }
+
+    buttonOnClick = async () => {
+        await this.props.logoutUser(this.props.history);
     }
 
     render() {
@@ -127,12 +137,31 @@ class Navbar extends Component {
                                 </Grid>
 
                                 <Grid item lg>
-                                    <Button variant='contained' className={classes.Button}>Logout</Button>
+                                    {this.props.user.authenticated ?
+                                        <Button>
+                                            variant='contained'
+                      className={classes.Button}
+                                            onClick={this.buttonOnClick}
+                                            >
+                                              Logout
+                    </Button>
+                                        :
+                                        <Grid container>
+                                            <Grid item>
+                                                <Link to='/login'>
+                                                    <Button variant='contained' className={classes.Button}>Login</Button>
+                                                </Link>
+                                            </Grid>
+                                            <Grid item>
+                                                <Link to='/signup'>
+                                                    <Button variant='contained' className={classes.Button}>Signup</Button>
+                                                </Link>
+                                            </Grid>
+                                        </Grid>
+                                    }
                                 </Grid>
                             </Grid>
-
                         </Grid>
-
                     </Toolbar>
                 </AppBar>
             </div>
@@ -140,4 +169,9 @@ class Navbar extends Component {
     }
 }
 
-export default withStyles(styles)(withRouter(Navbar))
+const mapStateToProps = state => ({
+    user: state.user,
+    errors: state.error
+});
+
+export default connect(mapStateToProps, { logoutUser })(withStyles(styles)(withRouter(Navbar)))
