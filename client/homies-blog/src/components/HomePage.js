@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import EventForm from './EventForm'
 import { SignupForm } from '.';
 import styled from 'styled-components'
+import { connect } from 'react-redux';
 import {
   withStyles,
   Typography,
@@ -18,7 +19,8 @@ const styles = theme => ({
 class HomePage extends Component {
   render() {
     const { classes } = this.props
-
+    const { user } = this.props;
+    console.log(user);
     return (
       <Fragment>
         <Grid>
@@ -26,7 +28,7 @@ class HomePage extends Component {
             variant='h1'
             className={classes.Typography}
           >
-            Sup User
+            {user.userinfo ? `hello ${user.userinfo.firstName}` : 'make an account dude'}
           </Typography>
         </Grid>
 
@@ -40,4 +42,10 @@ class HomePage extends Component {
   }
 }
 
-export default withStyles(styles)(HomePage);
+const mapStateToProps = state => ({
+  user: state.user,
+  errors: state.error
+});
+
+
+export default connect(mapStateToProps)(withStyles(styles)(HomePage));

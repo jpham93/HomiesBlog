@@ -11,7 +11,7 @@ import reducers from './reducers';
 import JssProvider from "react-jss/lib/JssProvider";
 import { create } from "jss";
 import { createGenerateClassName, jssPreset } from "@material-ui/core/styles";
-import { logoutUser, setAuthToken, setCurrentUser } from './actions/user_actions';
+import { logoutUser, setAuthToken, setCurrentUser, getUserInfo } from './actions/user_actions';
 import jwt_decode from 'jwt-decode';
 
 const generateClassName = createGenerateClassName();
@@ -32,7 +32,7 @@ if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
   const decoded = jwt_decode(localStorage.jwtToken);
   store.dispatch(setCurrentUser(decoded));
-
+  store.dispatch(getUserInfo());
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     store.dispatch(logoutUser([]));

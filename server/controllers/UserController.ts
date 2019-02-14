@@ -4,7 +4,6 @@ import { Response, Request, NextFunction } from 'express';
 import { BAD_REQUEST, UNAUTHORIZED, ACCEPTED } from 'http-status-codes';
 import { BaseController } from './base';
 import { UserRequestInterface } from '../common/types';
-import { runInNewContext } from 'vm';
 
 //todo: fix try catches, remove more stuff from payload
 export class UserController extends BaseController {

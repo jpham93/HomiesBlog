@@ -1,18 +1,20 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import { GET_ERRORS, SET_USER } from '.';
+import { GET_ERRORS, SET_USER, SET_ERRORS, LOAD_USER_INFO } from '.';
 
 const URL = 'http://localhost:3001';
 
 export const signup = (user, history) => async dispatch => {
-  const response = await axios.post('/api/users/signup', user)
+  const response = await axios.post(`${URL}/api/users/signup`, user)
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.error
       });
     });
-  history.push('/login');
+  if (response) {
+    history.push('/login');
+  }
 }
 
 export const login = (user) => async dispatch => {
@@ -41,9 +43,10 @@ export const setCurrentUser = (decodedToken) => {
 }
 
 export const logoutUser = history => dispatch => {
+  const NULL_USER = {};
   localStorage.removeItem('jwtToken');
   setAuthToken(false);
-  dispatch(setCurrentUser({}));
+  dispatch(setCurrentUser(NULL_USER));
   history.push('/login');
 }
 
@@ -52,5 +55,30 @@ export const setAuthToken = token => {
     axios.defaults.headers.common['Authorization'] = token;
   } else {
     delete axios.defaults.headers.common['Authorization'];
+  }
+}
+
+export const setErrorMsg = (message) => {
+  return {
+    type: SET_ERRORS,
+    payload: {
+      error: message
+    }
+  };
+}
+
+export const getUserInfo = () => async dispatch => {
+  let response = await axios.get(`${URL}/api/users`)
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.error
+      });
+    });
+  if (response) {
+    dispatch({
+      type: LOAD_USER_INFO,
+      payload: response.data
+    })
   }
 }

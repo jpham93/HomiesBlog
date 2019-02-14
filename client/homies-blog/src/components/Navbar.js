@@ -138,12 +138,12 @@ class Navbar extends Component {
 
                 <Grid item lg>
                   {this.props.user.authenticated ?
-                    <Button>
+                    <Button
                       variant='contained'
                       className={classes.Button}
                       onClick={this.buttonOnClick}
-                      >
-                        Logout
+                    >
+                      Logout
                     </Button>
                     :
                     <Grid container>

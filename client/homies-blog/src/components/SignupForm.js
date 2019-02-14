@@ -6,12 +6,8 @@ import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { required, validEmail, validDate, minSix, composeValidators } from '../common/validation';
 import Grid from '@material-ui/core/Grid';
+import { signup, setErrorMsg } from '../actions/user_actions';
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-const onSubmit = async values => {
-  await sleep(300);
-  window.alert(JSON.stringify(values, 0, 2));
-};
 
 const LabelError = styled.span`
   color: red;
@@ -25,6 +21,14 @@ const LabelContainer = styled.label`
 `;
 
 class AuthForm extends Component {
+  onSubmit = async (values) => {
+    if (values.password === values.passwordConfirmation) {
+      await this.props.signup(values, this.props.history);
+    } else {
+      this.props.setErrorMsg('passwords do not match');
+    }
+  }
+
   generateFields(name, validation, type, label, placeholder) {
     return (
       <Grid item xs={3}>
@@ -46,7 +50,7 @@ class AuthForm extends Component {
       <div>
         <h1>Signup</h1>
         <Form
-          onSubmit={onSubmit}
+          onSubmit={this.onSubmit}
           render={({ handleSubmit, reset, submitting, pristine, values }) => (
             <form onSubmit={handleSubmit} autoComplete='off'>
               <Grid container spacing={16}>
@@ -74,4 +78,9 @@ class AuthForm extends Component {
   }
 }
 
-export default AuthForm;
+const mapStateToProps = state => ({
+  user: state.user,
+  errors: state.error
+});
+
+export default connect(mapStateToProps, { signup, setErrorMsg })(AuthForm);
