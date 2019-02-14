@@ -20,7 +20,6 @@ class HomePage extends Component {
   render() {
     const { classes } = this.props
     const { user } = this.props;
-    console.log(user);
     return (
       <Fragment>
         <Grid>
@@ -28,7 +27,7 @@ class HomePage extends Component {
             variant='h1'
             className={classes.Typography}
           >
-            {user.userinfo ? `hello ${user.userinfo.firstName}` : 'make an account dude'}
+            {user.userinfo ? `Hello ${user.userinfo.firstName}` : 'make an account dude'}
           </Typography>
         </Grid>
 

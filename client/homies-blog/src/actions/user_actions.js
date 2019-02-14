@@ -9,7 +9,7 @@ export const signup = (user, history) => async dispatch => {
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.error
+        payload: err.response.data.error
       });
     });
   if (response) {
@@ -17,13 +17,13 @@ export const signup = (user, history) => async dispatch => {
   }
 }
 
-export const login = (user) => async dispatch => {
+export const login = (user, history) => async dispatch => {
   let response = await axios.post(`${URL}/api/users/login`, user)
     .catch(err => {
       console.log(err.response);
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data
+        payload: err.response.data.error
       });
     });
   if (response) {
@@ -32,6 +32,7 @@ export const login = (user) => async dispatch => {
     setAuthToken(token);
     const decodedToken = jwt_decode(token);
     dispatch(setCurrentUser(decodedToken));
+    history.push('/');
   }
 }
 
@@ -72,7 +73,7 @@ export const getUserInfo = () => async dispatch => {
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.error
+        payload: err.response.data.error
       });
     });
   if (response) {

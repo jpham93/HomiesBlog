@@ -30,7 +30,7 @@ export class UserController extends BaseController {
         // Check if email exists already
         const emailLookup = await this.db.user.findOne({ email: user.email })
         if (emailLookup) {
-            return res.status(400).json({ msg: "user already exists" })
+            return res.status(400).json({ error: "user already exists" })
         }
         // hash password then store new user
         user.password = await this._hashPassword(user.password);

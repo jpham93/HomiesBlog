@@ -164,6 +164,7 @@ class Navbar extends Component {
             </Grid>
           </Toolbar>
         </AppBar>
+        <div id="popper-anchor"></div>
       </div>
     )
   }

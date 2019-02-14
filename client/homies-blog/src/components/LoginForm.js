@@ -22,7 +22,7 @@ const LabelContainer = styled.label`
 class LoginForm extends Component {
 
   onSubmit = async (values) => {
-    await this.props.login(values);
+    await this.props.login(values, this.props.history);
   }
 
   generateFields(name, validation, type, label, placeholder) {
@@ -78,7 +78,7 @@ class LoginForm extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  errors: state.error
+  errors: state.errors
 });
 
 export default connect(mapStateToProps, { login })(LoginForm);

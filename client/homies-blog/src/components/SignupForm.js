@@ -7,7 +7,8 @@ import { Form, Field } from 'react-final-form';
 import { required, validEmail, validDate, minSix, composeValidators } from '../common/validation';
 import Grid from '@material-ui/core/Grid';
 import { signup, setErrorMsg } from '../actions/user_actions';
-
+import { ErrorBanner } from '.';
+import { isEmpty } from 'lodash';
 
 const LabelError = styled.span`
   color: red;
@@ -46,6 +47,8 @@ class AuthForm extends Component {
     );
   }
   render() {
+    const { errors } = this.props;
+
     return (
       <div>
         <h1>Signup</h1>
@@ -67,20 +70,22 @@ class AuthForm extends Component {
               <div className="buttons">
                 <Button variant="contained" type="submit" color="primary" disabled={submitting}>
                   Submit
-              </Button>
+                </Button>
               </div>
+              <ErrorBanner errors={errors} />
               <pre>{JSON.stringify(values, 0, 2)}</pre>
             </form>
           )}
         />
       </div>
     );
+
   }
 }
 
 const mapStateToProps = state => ({
   user: state.user,
-  errors: state.error
+  errors: state.errors
 });
 
 export default connect(mapStateToProps, { signup, setErrorMsg })(AuthForm);

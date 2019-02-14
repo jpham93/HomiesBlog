@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BlogPost } from './';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 const StyledGrid = styled(Grid)`
   display: flex;

@@ -7,3 +7,4 @@ export { default as PostForm } from './PostForm';
 export { default as SignupForm } from './SignupForm';
 export { default as EventForm } from './EventForm';
 export { default as LoginForm } from './LoginForm';
+export { default as ErrorBanner } from './ErrorBanner';
