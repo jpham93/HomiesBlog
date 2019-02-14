@@ -14,7 +14,6 @@ import {
   withStyles
 } from '@material-ui/core'
 import { logoutUser, clearErrors } from '../actions/user_actions';
-import { CLEAR_ERRORS } from '../actions';
 import { connect } from 'react-redux';
 import SearchIcon from '@material-ui/icons/Search'
 import { ErrorBanner } from '.';

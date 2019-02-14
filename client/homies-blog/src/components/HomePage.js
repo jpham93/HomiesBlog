@@ -3,6 +3,7 @@ import EventForm from './EventForm'
 import { SignupForm } from '.';
 import styled from 'styled-components'
 import { connect } from 'react-redux';
+import { getUserInfo } from '../actions/user_actions';
 import {
   withStyles,
   Typography,
@@ -17,6 +18,9 @@ const styles = theme => ({
 })
 
 class HomePage extends Component {
+  componentDidMount() {
+    this.props.getUserInfo();
+  }
   render() {
     const { classes } = this.props
     const { user } = this.props;
@@ -47,4 +51,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps)(withStyles(styles)(HomePage));
+export default connect(mapStateToProps, { getUserInfo })(withStyles(styles)(HomePage));
