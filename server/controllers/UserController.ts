@@ -30,7 +30,7 @@ export class UserController extends BaseController {
         // Check if email exists already
         const emailLookup = await this.db.user.findOne({ email: user.email })
         if (emailLookup) {
-            return res.status(400).json({ error: "user already exists" })
+            return res.status(400).json({ error: 'user already exists' })
         }
         // hash password then store new user
         user.password = await this._hashPassword(user.password);
@@ -53,7 +53,7 @@ export class UserController extends BaseController {
                 next(err);
             });
         if (!matching) {
-            return res.status(BAD_REQUEST).json({ error: 'passwords do not match' });
+            return res.status(BAD_REQUEST).json({ error: 'password invalid' });
         }
         const payload: object = {
             id: user.id

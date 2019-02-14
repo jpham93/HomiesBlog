@@ -13,9 +13,12 @@ import {
   Tabs,
   withStyles
 } from '@material-ui/core'
-import { logoutUser } from '../actions/user_actions';
+import { logoutUser, clearErrors } from '../actions/user_actions';
+import { CLEAR_ERRORS } from '../actions';
 import { connect } from 'react-redux';
 import SearchIcon from '@material-ui/icons/Search'
+import { ErrorBanner } from '.';
+import { isEmpty } from 'lodash';
 
 const styles = (theme) => ({
   Grid: {
@@ -51,6 +54,13 @@ class Navbar extends Component {
     super(props)
     this.state = {
       index: 0,
+    }
+  }
+
+  componentDidUpdate() {
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+    if (!isEmpty(this.props.errors)) {
+      sleep(3000).then(() => this.props.clearErrors())
     }
   }
 
@@ -165,6 +175,10 @@ class Navbar extends Component {
           </Toolbar>
         </AppBar>
         <div id="popper-anchor"></div>
+        <ErrorBanner
+          errors={this.props.errors}
+          dispatch={this.props.clearErrors}
+        />
       </div>
     )
   }
@@ -172,7 +186,8 @@ class Navbar extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  errors: state.error
+  errors: state.errors
 });
 
-export default connect(mapStateToProps, { logoutUser })(withStyles(styles)(withRouter(Navbar)))
+
+export default connect(mapStateToProps, { clearErrors, logoutUser })(withStyles(styles)(withRouter(Navbar)))

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Popper, Paper, Typography, Fade } from '@material-ui/core';
+import { Popper, Paper, Typography, Collapse } from '@material-ui/core';
 import { isEmpty } from 'lodash';
 import styled from 'styled-components';
 
@@ -16,11 +16,11 @@ export default (props) => {
       transition
     >
       {({ TransitionProps }) => (
-        <Fade {...TransitionProps} timeout={350}>
+        <Collapse {...TransitionProps}>
           <Paper>
             <StyledTypopgrahy>{props.errors.message}</StyledTypopgrahy>
           </Paper>
-        </Fade>
+        </Collapse>
       )}
     </Popper>
   );

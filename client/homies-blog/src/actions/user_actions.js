@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import { GET_ERRORS, SET_USER, SET_ERRORS, LOAD_USER_INFO } from '.';
+import { GET_ERRORS, SET_USER, SET_ERRORS, LOAD_USER_INFO, CLEAR_ERRORS } from '.';
 
 const URL = 'http://localhost:3001';
 
@@ -66,6 +66,13 @@ export const setErrorMsg = (message) => {
       error: message
     }
   };
+}
+
+export const clearErrors = () => dispatch => {
+  dispatch({
+    type: CLEAR_ERRORS,
+    payload: {}
+  });
 }
 
 export const getUserInfo = () => async dispatch => {

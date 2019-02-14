@@ -7,7 +7,6 @@ import { Form, Field } from 'react-final-form';
 import { required, validEmail, validDate, minSix, composeValidators } from '../common/validation';
 import Grid from '@material-ui/core/Grid';
 import { signup, setErrorMsg } from '../actions/user_actions';
-import { ErrorBanner } from '.';
 import { isEmpty } from 'lodash';
 
 const LabelError = styled.span`
@@ -72,7 +71,6 @@ class AuthForm extends Component {
                   Submit
                 </Button>
               </div>
-              <ErrorBanner errors={errors} />
               <pre>{JSON.stringify(values, 0, 2)}</pre>
             </form>
           )}
