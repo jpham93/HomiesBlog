@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import styled from 'styled-components'
 import {
     Divider,
     List,
@@ -9,7 +10,6 @@ import {
     ExpansionPanel,
     ExpansionPanelSummary,
     ExpansionPanelDetails,
-    withStyles,
     Button,
     Dialog,
     DialogTitle,
@@ -20,7 +20,6 @@ import {
 import {
     Image,
     ExpandMore,
-    NotificationImportant
 } from '@material-ui/icons/'
 
 const sampleEvents = [
@@ -31,26 +30,19 @@ const sampleEvents = [
     { id: 5, title: 'Event', content: 'Eat vegetables', date: '1/10/2019', description: 'Blah Blah Blah' },
 ]
 
-const styles = (theme) => ({
-    ExpansionPanel: {
-        width: 300,
-        position: 'absolute',
-        right: 0,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-
-    },
-    // ExpansionPanelSummary : {
-    //     textAlign: 'center',
-    // },
-    Badge: {
-        width: '20%',
-    },
-    NotificationImportant: {
-        marginRight: 5,
-    },
-})
+const StyledExpansionPanel = styled(ExpansionPanel)
+    `
+    width: 300px;
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    `
+const StyledBadge = styled(Badge)
+    `
+    width: 20%;
+    `
 
 class Events extends Component {
     constructor(props) {
@@ -78,8 +70,6 @@ class Events extends Component {
     }
 
     render() {
-        const { classes } = this.props
-        // const alertIcon = sampleEvents.length ? <NotificationImportant className={classes.NotificationImportant } color='secondary' /> : null
         const length = sampleEvents.length
         const events = sampleEvents.length ?
             sampleEvents.map(event => {
@@ -103,9 +93,9 @@ class Events extends Component {
 
         return (
             <Fragment>
-                <ExpansionPanel className={classes.ExpansionPanel}>
+                <StyledExpansionPanel>
                     <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-                        <Badge className={classes.Badge}
+                        <StyledBadge 
                             color="secondary"
                             badgeContent={length}
                             variant='dot'
@@ -113,14 +103,14 @@ class Events extends Component {
                             <Typography variant='subtitle1'>
                                 Events
                             </Typography>
-                        </Badge>
+                        </StyledBadge>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                         <List >
                             {events}
                         </List>
                     </ExpansionPanelDetails>
-                </ExpansionPanel>
+                </StyledExpansionPanel>
 
                 <Dialog
                     open={this.state.open}
@@ -151,4 +141,4 @@ class Events extends Component {
     }
 }
 
-export default withStyles(styles)(Events);
+export default Events;

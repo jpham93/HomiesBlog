@@ -1,50 +1,62 @@
-import React, { Component } from 'react'
-import { Link, NavLink, withRouter } from 'react-router-dom'    // keeps the browser from making a request to server
-// NavLink is similiar to Link but adds to class active
-// withRouter wraps higher order component and gives it same props as Route component
+import React, { Component, Fragment } from 'react'
+import { Link, withRouter } from 'react-router-dom'
+import styled from 'styled-components'
+import breakpoint from 'styled-components-breakpoint'
 import {
     AppBar,
     Toolbar,
     Typography,
     Button,
-    TextField,
     Grid,
     Tab,
     Tabs,
-    withStyles
+    
 } from '@material-ui/core'
+import {
+    indigo,
+} from '@material-ui/core/colors'
 import { logoutUser } from '../actions/user_actions';
 import { connect } from 'react-redux';
-import SearchIcon from '@material-ui/icons/Search'
 
-const styles = (theme) => ({
-    Grid: {
-        display: 'flex',
-    },
-    Button: {
-        justifyContent: 'space-between',
-        color: 'white',
-        background: 'blue',
-        top: 10,
-        right: 10,
-    },
-    TextField: {
-        width: 250,
-        marginLeft: 20,
-    },
-    SearchIcon: {
-        marginLeft: 30,
-    },
-    Tab: {
-        color: 'white',
-        '&:hover': {
-            background: '#74B9FF',
-        },
-        '&:focus': {
-            background: 'inherit',
-        }
+const buttonLight = indigo[200]
+
+const StyledButton = styled(Button)
+    `
+    color: #333945;
+    background: ${buttonLight};
+    opacity: 1.0;
+    margin: 2px;
+
+    &:hover {
+        background: ${indigo[100]};
     }
-})
+    `
+const StyledTab = styled(Tab)
+    `
+    color: white;
+    &:hover {
+        background: #74B9FF;
+    }
+    &:focus {
+        background: inherit;
+    }
+    `
+const BrandTypography = styled(Typography)
+    `
+    margin-right: 10px; 
+    `
+const GridContainer = styled(Grid)
+    `
+    ${
+        breakpoint('tablet')
+    `
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding
+    `
+    }
+    `
 
 class Navbar extends Component {
     constructor(props) {
@@ -65,103 +77,78 @@ class Navbar extends Component {
     }
 
     render() {
-        const { classes } = this.props
-
         return (
             <div id='navbar-container'>
                 <AppBar position='static'>
                     <Toolbar variant='title' color='inherit'>
-
-                        <Grid
+                        <GridContainer
                             container
+                            direction='column'
+                            alignItems='center'
                             justify='space-between'
                             lg={12}
                         >
-
-                            <Grid
-                                container
-                                lg={4}
-                                alignItems='center'
-                                justify='center'
-                            >
-                                <Grid item lg>
-                                    <Typography variant='h4'>
-                                        Homies Blog
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-
-                            <Grid
-                                container
-                                lg={4}
-                                alignItems='center'
-                                justify='center'
-                            >
-                                <Grid item lg>
-                                    <Tabs
-                                        value={this.state.index}   // first item is being underlined (selected) at value 0
-                                        indicatorColor='secondary'
-
-                                    >
-                                        <Link to='/' onClick={() => this.handleClick(0)}>
-                                            <Tab label='Home' className={classes.Tab} />
-                                        </Link>
-                                        <Link to='/post' onClick={() => this.handleClick(1)}>
-                                            <Tab label='Post' className={classes.Tab} />
-                                        </Link>
-                                        <Link to='/feed' onClick={() => this.handleClick(2)}>
-                                            <Tab label='Feed' className={classes.Tab} />
-                                        </Link>
-                                    </Tabs>
-                                </Grid>
-                            </Grid>
-                            <Grid
-                                lg={4}
-                                container
-                                justify='center'
-                                alignItems='center'
-                            >
-                                <Grid
-                                    container
-                                    justify='center'
-                                    alignItems='center'
-                                    lg={1}
+            
+                            <Grid item lg>
+                                <BrandTypography 
+                                    variant='h4'
                                 >
-                                    <Grid item sm>
-                                        <SearchIcon className={classes.SearchIcon} />
-                                    </Grid>
-                                </Grid>
+                                    Homies Blog
+                                </BrandTypography>
+                            </Grid>
+        
 
-                                <Grid item lg>
-                                    <TextField className={classes.TextField}></TextField>
-                                </Grid>
+                            
+                            <Grid
+                                item lg
+                            >
+                                <Tabs
+                                    value={this.state.index}   // first item is being underlined (selected) at value 0
+                                    indicatorColor='secondary'
 
-                                <Grid item lg>
-                                    {this.props.user.authenticated ?
-                                        <Button>
-                                            variant='contained'
-                      className={classes.Button}
-                                            onClick={this.buttonOnClick}
+                                >
+                                    <Link to='/' onClick={() => this.handleClick(0)}>
+                                        <StyledTab label='Home' />
+                                    </Link>
+                                    <Link to='/post' onClick={() => this.handleClick(1)}>
+                                        <StyledTab label='Post' />
+                                    </Link>
+                                    <Link to='/feed' onClick={() => this.handleClick(2)}>
+                                        <StyledTab label='Feed' />
+                                    </Link>
+                                </Tabs>
+                            </Grid>
+
+                            <Grid item lg>
+                                <Grid 
+                                    container
+                                    justify='flex-end'
+                                >
+                                    {this.props.user.authenticated 
+                                        ?
+                                        
+                                            <StyledButton
+                                                variant='contained'
+                                                onClick={this.buttonOnClick}
                                             >
-                                              Logout
-                    </Button>
+                                                Logout
+                                            </StyledButton>
+                                        
                                         :
-                                        <Grid container>
-                                            <Grid item>
-                                                <Link to='/login'>
-                                                    <Button variant='contained' className={classes.Button}>Login</Button>
-                                                </Link>
-                                            </Grid>
-                                            <Grid item>
-                                                <Link to='/signup'>
-                                                    <Button variant='contained' className={classes.Button}>Signup</Button>
-                                                </Link>
-                                            </Grid>
-                                        </Grid>
+                                        <Fragment>
+                                            <Link to='/login'>
+                                                <StyledButton variant='contained'>Login</StyledButton>
+                                            </Link>
+                                        
+                                            <Link to='/signup'>
+                                                <StyledButton variant='contained'>Signup</StyledButton>
+                                            </Link>
+                                        </Fragment>
                                     }
                                 </Grid>
                             </Grid>
-                        </Grid>
+                            
+                        </GridContainer>
                     </Toolbar>
                 </AppBar>
             </div>
@@ -174,4 +161,4 @@ const mapStateToProps = state => ({
     errors: state.error
 });
 
-export default connect(mapStateToProps, { logoutUser })(withStyles(styles)(withRouter(Navbar)))
+export default connect(mapStateToProps, { logoutUser })(withRouter(Navbar))

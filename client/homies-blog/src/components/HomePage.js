@@ -1,43 +1,59 @@
 import React, { Component, Fragment } from 'react';
 import EventForm from './EventForm'
+import Weather from './Weather'
+import Mood from './Mood'
 import { SignupForm } from '.';
 import styled from 'styled-components'
+import breakpoint from 'styled-components-breakpoint'
 import {
-  withStyles,
   Typography,
   Grid,
 } from '@material-ui/core'
 
-const styles = theme => ({
-  Typography: {
-    textAlign: 'center',
-    marginTop: 20
-  },
-})
+const StyledContainer = styled.div
+  `
+  width: 80%;
+  margin: auto;
+  `
+const StyledTypography = styled(Typography)
+  `
+  text-align: center;
+  margin: 25px;
+  `
 
 class HomePage extends Component {
   render() {
-    const { classes } = this.props
-
     return (
-      <Fragment>
-        <Grid>
-          <Typography
+      <StyledContainer>
+          <StyledTypography
             variant='h1'
-            className={classes.Typography}
           >
             Sup User
-          </Typography>
-        </Grid>
+          </StyledTypography>
+      
+        
+        <Grid 
+          container
+          lg={12}
+          justify='space-between'
+          alignItems='stretch'  
+        >
+          <Grid item>
+            <Weather />
+          </Grid>
 
-        <Grid>
-          <EventForm />
-        </Grid>
+          <Grid item>
+            <Mood />
+          </Grid>
 
-      </Fragment>
+          <Grid item>
+            <EventForm />
+          </Grid>
+        </Grid>
+      </StyledContainer>
     );
 
   }
 }
 
-export default withStyles(styles)(HomePage);
+export default HomePage;

@@ -12,15 +12,12 @@ const StyledPaper = styled(Paper)
     `
     width: 300px;
     padding: 20px 0;
-`
-const StyledTypography = styled(Typography)
     `
-    text-align: center;
-`
+
 const StyledGrid = styled(Grid)
     `
     width: 95%;
-`
+    `
 const StyledTextarea = styled.textarea
     `
     resize: none;
@@ -30,34 +27,82 @@ const StyledTextarea = styled.textarea
     &:active {
         border-bottom: 1px #00CCCD solid;
     };
-`
+    `
 const Alert = styled.span
     `
     color: red;
-`
+    `
+
+const toTitleCase = (str) => {
+    return str.replace(
+        /\w\S*/g,
+        function (txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }
+    );
+}
+
+const required = (value) => (
+    value ? undefined : 'Required'
+)
+
 class EventForm extends Component {
 
-    handleSubmit = (event) => {
-        event.preventDefault()
+    state = {
+        event: "",
+        description: "",
+        date: "",
+        details: "",
     }
 
-    required = (value) => (
-        value ? undefined : 'Required'
-    )
+    handleSubmit = values => (event) => {
+        event.preventDefault()
+        alert(JSON.stringify(values, 0, 2))
+    }
+
+    handleChange = values => {
+        this.setState({
+            ...values,
+        })
+    }
 
     render() {
+        const fields = ['title', 'description', 'date'].map(type => {
+
+            return (
+                <StyledGrid item lg>
+                    <Field
+                        name={type}
+                        component={type === 'date' ? 'date' : 'input'}
+                        validate={required}
+                        placeholder={toTitleCase(type)}
+                    >
+                        {
+                            ({ input, meta, placeholder }) => (
+                                <div className={meta.active ? 'active' : ''}>
+                                    <label>{toTitleCase(type)}</label>
+                                    <input {...input} placeholder={placeholder} />
+                                    {meta.error && meta.touched && <Alert>{meta.error}</Alert>}
+                                </div>
+                            )
+                        }
+                    </Field>
+                </StyledGrid>
+            )
+        })
 
         return (
             <StyledPaper>
-                <StyledTypography
+                <Typography
                     variant='headline'
+                    align='center'
                 >
                     Create Event
-                </StyledTypography>
+                </Typography>
                 <Form
                     onSubmit={this.handleSubmit}
                 >
-                    {({ handleSubmit, values, submitting }) => (
+                    {({ handleSubmit, values, submitting, pristine, invalid }) => (
                         <form onSubmit={handleSubmit}>
                             <Grid
                                 container
@@ -66,70 +111,15 @@ class EventForm extends Component {
                                 justify='center'
                                 alignItems='center'
                             >
-                                <StyledGrid item lg>
-                                    <label>Title</label>
-                                    <Field
-                                        name='title'
-                                        component='input'
-                                        validate={this.required}
-                                        placeholder='Title'
-                                    >
-                                        {
-                                            ({ input, meta, placeholder }) => (
-                                                <div className={meta.active ? 'active' : ''}>
-                                                    <label>Details</label>
-                                                    <input {...input} placeholder={placeholder} />
-                                                    {meta.error && meta.touched && <Alert >{meta.error}</Alert>}
-                                                </div>
-                                            )
-                                        }
-                                    </Field>
-                                </StyledGrid>
-                                <StyledGrid item lg>
-                                    <label>Description</label>
-                                    <Field
-                                        name='content'
-                                        component='input'
-                                        validate={this.required}
-                                        placeholder='Description'
-                                    >
-                                        {
-                                            ({ input, meta, placeholder }) => (
-                                                <div className={meta.active ? 'active' : ''}>
-                                                    <label>Details</label>
-                                                    <input {...input} placeholder={placeholder} />
-                                                    {meta.error && meta.touched && <Alert >{meta.error}</Alert>}
-                                                </div>
-                                            )
-                                        }
-                                    </Field>
+                                {fields}
 
-                                </StyledGrid>
-                                <StyledGrid item lg>
-                                    <label>Date</label>
-                                    <Field
-                                        name='date'
-                                        component='input'
-                                        validate={this.required}
-                                        placeholder='Date'
-                                    >
-                                        {
-                                            ({ input, meta, placeholder }) => (
-                                                <div className={meta.active ? 'active' : ''}>
-                                                    <label>Details</label>
-                                                    <input {...input} placeholder={placeholder} />
-                                                    {meta.error && meta.touched && <Alert >{meta.error}</Alert>}
-                                                </div>
-                                            )
-                                        }
-                                    </Field>
-                                </StyledGrid>
                                 <StyledGrid item lg>
                                     <Field
                                         name='details'
                                         component='input'
-                                        validate={this.required}
+                                        validate={required}
                                         placeholder='Details'
+                                        value={values.details}
                                     >
                                         {
                                             ({ input, meta, placeholder }) => (
@@ -144,7 +134,7 @@ class EventForm extends Component {
                                 </StyledGrid>
                                 <Button
                                     type='submit'
-                                    disabled={submitting}
+                                    disabled={pristine || invalid || submitting}
                                     variant='outlined'
                                     color='primary'
                                 >

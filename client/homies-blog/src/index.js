@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { HomePage, BlogFeed, Navbar, PostForm, Events, SignupForm, LoginForm } from './components';
+import { HomePage, BlogFeed, Navbar, PostForm, Events, SignupForm, LoginForm, Footer } from './components';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -55,6 +55,7 @@ ReactDOM.render(
             <Route path="/feed" component={BlogFeed} />
             <Route path="/" component={HomePage} />
           </Switch>
+          <Footer />
         </div>
       </BrowserRouter>
     </Provider>
