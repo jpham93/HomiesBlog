@@ -1,18 +1,21 @@
-import React, {Component} from 'react'
-import { 
-    TextField, 
-    Paper, 
+import React, { Component } from 'react'
+import styled from 'styled-components'
+import {
+    TextField,
+    Paper,
     Grid,
     Button,
     Typography,
 } from '@material-ui/core'
 import {
-    
+
 } from '@material-ui/icons'
 
-const style={
-    Paper: {padding: 20, marginTop: 30}
-}
+const StyledPaper = styled(Paper)
+    `
+    padding: 20px;
+    margin-top: 30px;
+    `
 
 class PostForm extends Component {
     constructor(props) {
@@ -20,20 +23,20 @@ class PostForm extends Component {
         this.state = {
             mediaURl: '',
             title: '',
-            body: '',   
+            body: '',
         }
     }
-    
+
     handleChange = (event) => {
         const { name, value } = event.target
 
         this.setState({
-            [name] : value,
+            [name]: value,
         })
     }
 
     handleSubmit = () => {
-        const {title, body} = this.state
+        const { title, body } = this.state
 
         alert(`You a snitch! Here's what you said:\nTitle: ${title}\nBody: ${body}`)
         // POST via axios
@@ -42,27 +45,27 @@ class PostForm extends Component {
     render() {
         const { title, body } = this.state
 
-        return(
-            <Grid md={6} style={{margin: 'auto'}}>
-                <Paper style={style.Paper}>
+        return (
+            <Grid md={6} style={{ margin: 'auto' }}>
+                <StyledPaper>
                     <Typography
                         variant='display1'
                         align='center'
                     >
                         Make a Post
                     </Typography>
-                    <Grid 
-                        container 
+                    <Grid
+                        container
                         md
                         alignItems='center'
                         justify='center'
-                        
+
                     >
-                        <form onSubmit={this.handleSubmit}> 
+                        <form onSubmit={this.handleSubmit}>
                             <Grid
                                 container
                                 md={6}
-                                style={{margin: 'auto'}}    
+                                style={{ margin: 'auto' }}
                             >
                                 <Grid item sm>
                                     <TextField
@@ -70,7 +73,7 @@ class PostForm extends Component {
                                         helperText="Post Title"
                                         variant="outlined"
                                         margin="normal"
-                                        
+
                                         onChange={this.handleChange}
                                         name='title'
                                         value={title}
@@ -78,7 +81,7 @@ class PostForm extends Component {
                                 </Grid>
                             </Grid>
                             <Grid item sm>
-                                <TextField 
+                                <TextField
                                     label='Body'
                                     helperText='Post Goes here'
                                     variant='filled'
@@ -86,7 +89,7 @@ class PostForm extends Component {
                                     multiline
                                     rows='10'
                                     rowsMax="20"
-                                    style={{width: 400, overflowY: 'auto'}}
+                                    style={{ width: 400, overflowY: 'auto' }}
 
                                     onChange={this.handleChange}
                                     name='body'
@@ -99,9 +102,9 @@ class PostForm extends Component {
                             >
                                 <Button
                                     color='primary'
-                                    variant='raised'
+                                    variant='contained'
                                     size='large'
-                                    style={{margin: 'auto'}}
+                                    style={{ margin: 'auto' }}
                                     onClick={this.handleSubmit}
                                 >
                                     Post
@@ -109,9 +112,9 @@ class PostForm extends Component {
                             </Grid>
                         </form>
                     </Grid>
-                </Paper>
+                </StyledPaper>
             </Grid>
-            
+
         )
     }
 }
