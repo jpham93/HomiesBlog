@@ -1,3 +1,4 @@
+//TODO: FIX POPPER
 import React, { Component, Fragment } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
@@ -175,7 +176,7 @@ class Navbar extends Component {
           </Toolbar>
         </AppBar>
         <ErrorBanner
-          errors={this.props.error}
+          errors={this.props.errors}
           dispatch={this.props.clearErrors}
         />
       </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ErrorBanner } from '.'
 
 const StyledDiv = styled.div`
   height: 25px;
@@ -7,8 +8,7 @@ const StyledDiv = styled.div`
 
 export default () => {
   return (
-    <StyledDiv>
-      <button id="popper-anchor">hello test the popper</button>
+    <StyledDiv id="popperAnchor">
     </StyledDiv>
   );
 }
