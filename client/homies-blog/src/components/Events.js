@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import styled from 'styled-components'
 import {
     Divider,
     List,
@@ -9,7 +10,6 @@ import {
     ExpansionPanel,
     ExpansionPanelSummary,
     ExpansionPanelDetails,
-    withStyles,
     Button,
     Dialog,
     DialogTitle,
@@ -20,40 +20,32 @@ import {
 import {
     Image,
     ExpandMore,
-    NotificationImportant
 } from '@material-ui/icons/'
 
 const sampleEvents = [
-    {id: 1, title: 'Event', content: 'Do your homework', date: '1/10/2019', description: 'Blah Blah Blah'},
-    {id: 2, title: 'Event', content: 'Take out the trash', date: '1/10/2019', description: 'Blah Blah Blah'},
-    {id: 3, title: 'Event', content: 'Mow the loan', date: '1/10/2019', description: 'Blah Blah Blah'},
-    {id: 4, title: 'Event', content: 'Call your mom', date: '1/10/2019', description: 'Blah Blah Blah'},
-    {id: 5, title: 'Event', content: 'Eat vegetables', date: '1/10/2019', description: 'Blah Blah Blah'},
+    { id: 1, title: 'Event', content: 'Do your homework', date: '1/10/2019', description: 'Blah Blah Blah' },
+    { id: 2, title: 'Event', content: 'Take out the trash', date: '1/10/2019', description: 'Blah Blah Blah' },
+    { id: 3, title: 'Event', content: 'Mow the loan', date: '1/10/2019', description: 'Blah Blah Blah' },
+    { id: 4, title: 'Event', content: 'Call your mom', date: '1/10/2019', description: 'Blah Blah Blah' },
+    { id: 5, title: 'Event', content: 'Eat vegetables', date: '1/10/2019', description: 'Blah Blah Blah' },
 ]
 
-const styles = (theme) => ({
-    ExpansionPanel: {
-        width: 300,
-        position: 'absolute',
-        right: 0,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        
-    },
-    // ExpansionPanelSummary : {
-    //     textAlign: 'center',
-    // },
-    Badge : {
-        width: '20%',
-    },
-    NotificationImportant: {
-        marginRight: 5,
-    },
-})
+const StyledExpansionPanel = styled(ExpansionPanel)
+    `
+    width: 300px;
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    `
+const StyledBadge = styled(Badge)
+    `
+    width: 20%;
+    `
 
 class Events extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             open: false,
@@ -78,12 +70,10 @@ class Events extends Component {
     }
 
     render() {
-        const { classes } = this.props
-        // const alertIcon = sampleEvents.length ? <NotificationImportant className={classes.NotificationImportant } color='secondary' /> : null
         const length = sampleEvents.length
-        const events = sampleEvents.length ? 
-            sampleEvents.map( event => {
-                return(
+        const events = sampleEvents.length ?
+            sampleEvents.map(event => {
+                return (
                     <Fragment>
                         <Divider />
                         <ListItem key={event.id} onClick={() => this.handleClick(event)}>
@@ -97,46 +87,46 @@ class Events extends Component {
                     </Fragment>
                 )
             }) :
-                "There are no events right now"
-        
+            "There are no events right now"
+
         const { title, content, date, description } = this.state
 
-        return(
+        return (
             <Fragment>
-                <ExpansionPanel className={classes.ExpansionPanel}>
+                <StyledExpansionPanel>
                     <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-                        <Badge className={classes.Badge} 
-                            color="secondary" 
+                        <StyledBadge 
+                            color="secondary"
                             badgeContent={length}
                             variant='dot'
                         >
                             <Typography variant='subtitle1'>
                                 Events
                             </Typography>
-                        </Badge>
+                        </StyledBadge>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                         <List >
                             {events}
                         </List>
                     </ExpansionPanelDetails>
-                </ExpansionPanel>
+                </StyledExpansionPanel>
 
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleToggle}
                 >
                     <DialogTitle>
-                        { title }
+                        {title}
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                             <Divider />
                             <Typography variant='subheading'>
-                                { content }
+                                {content}
                             </Typography>
                             <Divider /><br />
-                           { description }
+                            {description}
                         </DialogContentText>
                     </DialogContent>
                     <Button
@@ -151,4 +141,4 @@ class Events extends Component {
     }
 }
 
-export default withStyles(styles)(Events);
+export default Events;

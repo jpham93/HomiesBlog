@@ -14,11 +14,12 @@ export default (props) => {
       open={!isEmpty(props.errors)}
       anchorEl={document.getElementById('popper-anchor')}
       transition
+      placement='top'
     >
       {({ TransitionProps }) => (
         <Collapse {...TransitionProps}>
           <Paper>
-            <StyledTypopgrahy>{props.errors.message}</StyledTypopgrahy>
+            <StyledTypopgrahy>{"test"/*props.errors.message*/}test</StyledTypopgrahy>
           </Paper>
         </Collapse>
       )}

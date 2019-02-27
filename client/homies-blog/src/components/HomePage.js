@@ -3,18 +3,25 @@ import EventForm from './EventForm'
 import styled from 'styled-components'
 import { connect } from 'react-redux';
 import { getUserInfo } from '../actions/user_actions';
+import Weather from './Weather'
+import Mood from './Mood'
+import { SignupForm } from '.';
+import breakpoint from 'styled-components-breakpoint'
 import {
-  withStyles,
   Typography,
   Grid,
 } from '@material-ui/core'
 
-const styles = theme => ({
-  Typography: {
-    textAlign: 'center',
-    marginTop: 20
-  },
-})
+const StyledContainer = styled.div
+  `
+  width: 80%;
+  margin: auto;
+  `
+const StyledTypography = styled(Typography)
+  `
+  text-align: center;
+  margin: 25px;
+  `
 
 class HomePage extends Component {
   componentDidMount() {
@@ -24,21 +31,33 @@ class HomePage extends Component {
     const { classes } = this.props
     const { user } = this.props;
     return (
-      <Fragment>
-        <Grid>
-          <Typography
-            variant='h1'
-            className={classes.Typography}
-          >
-            {user.userinfo ? `Hello ${user.userinfo.firstName}` : 'make an account dude'}
-          </Typography>
-        </Grid>
+      <StyledContainer>
+        <StyledTypography
+          variant='h1'
+        >
+          {user.userinfo ? `Hello ${user.userinfo.firstName}` : 'make an account dude'}
+        </StyledTypography>
 
-        <Grid>
-          <EventForm />
-        </Grid>
 
-      </Fragment>
+        <Grid
+          container
+          lg={12}
+          justify='space-between'
+          alignItems='stretch'
+        >
+          <Grid item>
+            <Weather />
+          </Grid>
+
+          <Grid item>
+            <Mood />
+          </Grid>
+
+          <Grid item>
+            <EventForm />
+          </Grid>
+        </Grid>
+      </StyledContainer>
     );
 
   }
@@ -50,4 +69,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { getUserInfo })(withStyles(styles)(HomePage));
+export default connect(mapStateToProps, { getUserInfo })(HomePage);
