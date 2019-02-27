@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import EventForm from './EventForm'
-import { SignupForm } from '.';
 import styled from 'styled-components'
 import { connect } from 'react-redux';
 import { getUserInfo } from '../actions/user_actions';

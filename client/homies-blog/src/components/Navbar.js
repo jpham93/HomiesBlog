@@ -59,7 +59,7 @@ class Navbar extends Component {
   componentDidUpdate() {
     const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     if (!isEmpty(this.props.errors)) {
-      sleep(3000).then(() => this.props.clearErrors())
+      sleep(2500).then(() => this.props.clearErrors())
     }
   }
 
@@ -71,6 +71,17 @@ class Navbar extends Component {
 
   buttonOnClick = async () => {
     await this.props.logoutUser(this.props.history);
+  }
+
+  renderErrorBanner = () => {
+    return (
+      <div id="popper-anchor">
+        <ErrorBanner
+          errors={this.props.errors}
+          dispatch={this.props.clearErrors}
+        />
+      </div>
+    )
   }
 
   render() {
@@ -173,11 +184,9 @@ class Navbar extends Component {
             </Grid>
           </Toolbar>
         </AppBar>
-        <div id="popper-anchor"></div>
-        <ErrorBanner
-          errors={this.props.errors}
-          dispatch={this.props.clearErrors}
-        />
+        <div>
+          {isEmpty(this.props.errors) ? '' : this.renderErrorBanner()}
+        </div>
       </div>
     )
   }
