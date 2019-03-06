@@ -8,14 +8,24 @@ import {
     Typography,
 } from '@material-ui/core'
 import {
+    indigo,
+    grey,
+} from '@material-ui/core/colors'
 
-} from '@material-ui/icons'
-
-const StyledPaper = styled(Paper)
+const StyledPaper = styled.div
     `
+    background: ${grey[50]};
     padding: 20px;
-    margin-top: 30px;
+    opacity: 0.85;
+    height: 601px;
     `
+const StyledButton = styled(Button)`
+    margin: 0 5px;
+`
+const StyledGrid = styled(Grid)`
+    margin: 'auto'; 
+    margin-top: -26px;
+`
 
 class PostForm extends Component {
     constructor(props) {
@@ -35,6 +45,14 @@ class PostForm extends Component {
         })
     }
 
+    handleClear = () => {
+        this.setState({
+            mediaURl: '',
+            title: '',
+            body: '',
+        })
+    }
+
     handleSubmit = () => {
         const { title, body } = this.state
 
@@ -46,28 +64,32 @@ class PostForm extends Component {
         const { title, body } = this.state
 
         return (
-            <Grid md={6} style={{ margin: 'auto' }}>
+            <StyledGrid md={12}>
                 <StyledPaper>
                     <Typography
-                        variant='display1'
+                        variant='h2'
                         align='center'
                     >
                         Make a Post
                     </Typography>
                     <Grid
                         container
-                        md
-                        alignItems='center'
+                        md={12}
+                        direction='column'
                         justify='center'
+                        alignItems='center'
 
                     >
                         <form onSubmit={this.handleSubmit}>
                             <Grid
                                 container
-                                md={6}
+                                md
+                                direction='column'
+                                justify='center'
+                                alignItems='center'
                                 style={{ margin: 'auto' }}
                             >
-                                <Grid item sm>
+                                <Grid item md>
                                     <TextField
                                         label="Title"
                                         helperText="Post Title"
@@ -80,7 +102,7 @@ class PostForm extends Component {
                                     />
                                 </Grid>
                             </Grid>
-                            <Grid item sm>
+                            <Grid item md>
                                 <TextField
                                     label='Body'
                                     helperText='Post Goes here'
@@ -90,7 +112,6 @@ class PostForm extends Component {
                                     rows='10'
                                     rowsMax="20"
                                     style={{ width: 400, overflowY: 'auto' }}
-
                                     onChange={this.handleChange}
                                     name='body'
                                     value={body}
@@ -99,21 +120,29 @@ class PostForm extends Component {
                             <Grid
                                 container
                                 md
+                                justify='center'
                             >
-                                <Button
+                                <StyledButton
                                     color='primary'
                                     variant='contained'
                                     size='large'
-                                    style={{ margin: 'auto' }}
                                     onClick={this.handleSubmit}
                                 >
                                     Post
-                                </Button>
+                                </StyledButton>
+                                <StyledButton
+                                    color='primary'
+                                    variant='contained'
+                                    size='large'
+                                    onClick={this.handleClear}
+                                >
+                                    Clear
+                                </StyledButton>
                             </Grid>
                         </form>
                     </Grid>
                 </StyledPaper>
-            </Grid>
+            </StyledGrid>
 
         )
     }

@@ -80,7 +80,7 @@ export const getUserInfo = () => async dispatch => {
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data.error
+        // payload: err.response.data.error
       });
     });
   if (response) {

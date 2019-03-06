@@ -2,9 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledFooter = styled.div`
+    z-index: -10;
     position: absolute;
     width: 100%;
-    height: 100px;
+    height: 150px;
     bottom: 0;
     background-image: url('https://cdn.wonderfulengineering.com/wp-content/uploads/2014/07/Landscape-wallpapers-21.jpg');
     background-repeat: no-repeat;
@@ -14,7 +15,7 @@ const StyledFooter = styled.div`
 const Footer = props => {
   return (
     <StyledFooter>
-
+      
     </StyledFooter>
   )
 }

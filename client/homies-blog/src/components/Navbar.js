@@ -11,7 +11,6 @@ import {
   Grid,
   Tab,
   Tabs,
-
 } from '@material-ui/core'
 import { logoutUser, clearErrors } from '../actions/user_actions';
 import { connect } from 'react-redux';

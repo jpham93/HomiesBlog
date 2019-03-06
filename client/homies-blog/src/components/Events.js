@@ -38,6 +38,7 @@ const StyledExpansionPanel = styled(ExpansionPanel)
     display: flex;
     flex-direction: column;
     justify-content: center;
+    z-index: 10;
     `
 const StyledBadge = styled(Badge)
     `
@@ -95,7 +96,7 @@ class Events extends Component {
             <Fragment>
                 <StyledExpansionPanel>
                     <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-                        <StyledBadge 
+                        <StyledBadge
                             color="secondary"
                             badgeContent={length}
                             variant='dot'

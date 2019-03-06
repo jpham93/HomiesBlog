@@ -7,17 +7,28 @@ import { connect } from 'react-redux';
 const StyledGrid = styled(Grid)`
   display: flex;
   align-content: center;
+  width: 80%;
+  margin: auto;
 `
 
 const StyledDiv = styled.div`
-  flex-grow: 1;
+  width: 100%;
+  max-height: 600px;
+  margin-top: -25px;
+  overflow-y: auto;
 `
 
 class BlogFeed extends Component {
   render() {
     return (
       <StyledDiv>
-        <StyledGrid container spacing={24}>
+        <StyledGrid
+          container
+          spacing={24}
+          direction='column'
+          justify='center'
+
+        >
           <Grid item xs={12}>
             <BlogPost />
             <BlogPost />
